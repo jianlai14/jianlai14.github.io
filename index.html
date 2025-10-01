@@ -27,17 +27,27 @@
     /* 流星样式 */
     .meteor {
       position: absolute;
-      width: 2px;
-      height: 80px;
-      background: linear-gradient(180deg, #fff, #ffb6e6 80%);
-      opacity: 0.7;
+      width: 2.5px;
+      height: 120px;
+      background: linear-gradient(120deg, #e6e6e6 0%, #fff 40%, #bfc7d1 100%);
+      opacity: 0.92;
       border-radius: 2px;
+      box-shadow: 0 0 18px 6px #bfc7d1, 0 0 32px 8px #fff;
       pointer-events: none;
       animation: fallMeteor 2s linear forwards;
     }
     @keyframes fallMeteor {
-      0% { transform: translateY(-100px) rotate(-20deg);}
-      100% { transform: translateY(100vh) rotate(-20deg);}
+      0% {
+        transform: translate(-60px, -100px) rotate(-35deg) scaleY(1.1);
+        opacity: 1;
+      }
+      80% {
+        opacity: 0.9;
+      }
+      100% {
+        transform: translate(400px, 100vh) rotate(-35deg) scaleY(1.1);
+        opacity: 0;
+      }
     }
     /* 爱心容器 */
     .heart-container {
@@ -118,13 +128,16 @@
     function createMeteor() {
       const meteor = document.createElement('div');
       meteor.className = 'meteor';
-      meteor.style.left = Math.random() * window.innerWidth + 'px';
-      meteor.style.top = '-100px';
-      meteor.style.animationDuration = (1.5 + Math.random()) + 's';
+      // 从左上方流出，随机起点在左侧上方
+      const startX = Math.random() * (window.innerWidth * 0.3);
+      const startY = Math.random() * (window.innerHeight * 0.2);
+      meteor.style.left = startX + 'px';
+      meteor.style.top = startY + 'px';
+      meteor.style.animationDuration = (1.2 + Math.random() * 0.8) + 's';
       document.body.appendChild(meteor);
       setTimeout(() => meteor.remove(), 2200);
     }
-    setInterval(createMeteor, 700);
+    setInterval(createMeteor, 600);
 
     // 适应窗口大小
     window.onresize = () => {
