@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <title>飘泡泡+流星+立体爱心</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: linear-gradient(135deg, #ffe6f0 0%, #f9c6e0 100%);
+      height: 100vh;
+      position: relative;
+    }
+    /* 泡泡样式 */
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ffb6e6 60%, #fff0fa 100%);
+      opacity: 0.7;
+      pointer-events: none;
+      animation: floatBubble 12s linear infinite;
+    }
+    @keyframes floatBubble {
+      0% { transform: translateY(0) scale(1);}
+      100% { transform: translateY(-100vh) scale(1.2);}
+    }
+    /* 流星样式 */
+    .meteor {
+      position: absolute;
+      width: 2px;
+      height: 80px;
+      background: linear-gradient(180deg, #fff, #ffb6e6 80%);
+      opacity: 0.7;
+      border-radius: 2px;
+      pointer-events: none;
+      animation: fallMeteor 2s linear forwards;
+    }
+    @keyframes fallMeteor {
+      0% { transform: translateY(-100px) rotate(-20deg);}
+      100% { transform: translateY(100vh) rotate(-20deg);}
+    }
+    /* 爱心容器 */
+    .heart-container {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      perspective: 600px;
+    }
+    /* 立体爱心 */
+    .heart {
+      width: 220px;
+      height: 200px;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: beat 1s infinite;
+    }
+    @keyframes beat {
+      0%, 100% { transform: scale(1) rotateY(0deg);}
+      20% { transform: scale(1.08) rotateY(10deg);}
+      40% { transform: scale(0.95) rotateY(-10deg);}
+      60% { transform: scale(1.08) rotateY(10deg);}
+      80% { transform: scale(1) rotateY(0deg);}
+    }
+    .heart-shape {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #ff4f8b 60%, #ffb6e6 100%);
+      clip-path: path('M110 30 C110 0, 220 0, 220 60 C220 120, 110 200, 110 200 C110 200, 0 120, 0 60 C0 0, 110 0, 110 30 Z');
+      box-shadow: 0 10px 40px #ffb6e6, 0 0 60px #ff4f8b inset;
+      filter: drop-shadow(0 0 30px #ffb6e6);
+    }
+    /* 爱心文字 */
+    .heart-text {
+      position: absolute;
+      width: 100%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 0 2px 8px #ff4f8b, 0 0 10px #fff;
+      font-family: '微软雅黑', 'Arial', sans-serif;
+      user-select: none;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- 爱心 -->
+  <div class="heart-container">
+    <div class="heart">
+      <div class="heart-shape"></div>
+      <div class="heart-text">傻逼陈映汶</div>
+    </div>
+  </div>
+  <script>
+    // 泡泡生成
+    function createBubble() {
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble';
+      const size = Math.random() * 40 + 30;
+      bubble.style.width = size + 'px';
+      bubble.style.height = size + 'px';
+      bubble.style.left = Math.random() * window.innerWidth + 'px';
+      bubble.style.bottom = '-60px';
+      bubble.style.animationDuration = (8 + Math.random() * 6) + 's';
+      document.body.appendChild(bubble);
+      setTimeout(() => bubble.remove(), 13000);
+    }
+    setInterval(createBubble, 400);
+
+    // 流星生成
+    function createMeteor() {
+      const meteor = document.createElement('div');
+      meteor.className = 'meteor';
+      meteor.style.left = Math.random() * window.innerWidth + 'px';
+      meteor.style.top = '-100px';
+      meteor.style.animationDuration = (1.5 + Math.random()) + 's';
+      document.body.appendChild(meteor);
+      setTimeout(() => meteor.remove(), 2200);
+    }
+    setInterval(createMeteor, 700);
+
+    // 适应窗口大小
+    window.onresize = () => {
+      document.querySelectorAll('.bubble').forEach(b => b.style.left = Math.random() * window.innerWidth + 'px');
+      document.querySelectorAll('.meteor').forEach(m => m.style.left = Math.random() * window.innerWidth + 'px');
+    };
+  </script>
+</body>
+</html>
